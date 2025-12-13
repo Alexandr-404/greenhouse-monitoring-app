@@ -1,0 +1,18 @@
+@use "../../../app/styles/variables";
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+.label {
+  font-size: 12px;
+  color: var(--c-text-primary);
+}
+.select {
+  min-width: 200px;
+  height: 40px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-surface);
+}

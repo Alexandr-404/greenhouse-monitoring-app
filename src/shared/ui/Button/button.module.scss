@@ -1,0 +1,25 @@
+@use "../../../app/styles/variables";
+
+.btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--c-border);
+  cursor: pointer;
+  height: 40px;
+  color: var(--c-text-base);
+  transition: background-color 160ms ease, transform 120ms ease;
+}
+
+.primary {
+  background: var(--c-primary);
+}
+.primary:hover {
+  background: var(--c-primary-hover);
+}
+
+.secondary {
+  background: var(--c-secondary);
+}
+.secondary:hover {
+  background: var(--c-secondary-hover);
+}

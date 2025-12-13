@@ -1,0 +1,13 @@
+@use "../../../app/styles/variables";
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--c-border);
+  background: var(--c-bg-surface);
+  outline: none;
+}
+.input:focus {
+  border-color: var(--c-focus);
+}
