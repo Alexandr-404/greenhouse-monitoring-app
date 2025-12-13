@@ -1,0 +1,17 @@
+@use "./mixins" as *;
+@use "./variables" as *;
+
+:root {
+  @include colors;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background: var(--c-bg-app);
+  color: var(--c-text-primary);
+}
