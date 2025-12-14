@@ -1,0 +1,74 @@
+.tree {
+  display: grid;
+  gap: 10px;
+}
+.empty {
+  padding: 10px;
+  color: #666;
+}
+
+.regionBlock {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.regionRow {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px;
+  background: #fff;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.regionRow:hover {
+  background: #fafafa;
+}
+
+.chev {
+  font-size: 12px;
+  transform: translateY(1px);
+  transition: transform 0.15s ease;
+}
+.chevOpen {
+  transform: rotate(90deg) translateY(1px);
+}
+
+.regionName {
+  font-weight: 600;
+}
+.count {
+  font-size: 12px;
+  color: #666;
+  padding: 2px 8px;
+  border: 1px solid #eee;
+  border-radius: 999px;
+}
+
+.ghList {
+  list-style: none;
+  margin: 0;
+  padding: 6px 10px 10px;
+  display: grid;
+  gap: 6px;
+}
+.ghRow {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.ghRow:hover {
+  background: #fafafa;
+}
+.ghRowActive {
+  border-color: #111;
+}

@@ -1,0 +1,29 @@
+.grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 16px;
+}
+.left {
+  padding: 12px;
+}
+.filter {
+  margin: 10px 0 12px;
+}
+
+.right {
+  display: grid;
+  gap: 16px;
+}
+.block {
+  padding: 12px;
+}
+
+.note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+.selected {
+  display: grid;
+  gap: 8px;
+}
