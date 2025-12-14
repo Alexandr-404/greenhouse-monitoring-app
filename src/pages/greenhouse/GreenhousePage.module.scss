@@ -2,7 +2,21 @@
   display: grid;
   gap: 16px;
 }
+.top {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+.titleBlock {
+  display: grid;
+  gap: 6px;
+}
 
+.controls {
+  padding: 12px;
+  gap: 12px;
+}
 .card {
   padding: 12px;
 }

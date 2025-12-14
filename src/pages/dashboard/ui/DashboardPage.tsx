@@ -18,7 +18,6 @@ export function DashboardPage() {
     isError,
   } = useDashboardPageModel();
 
-  console.log("regions:111", { regions });
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error</div>;
 
