@@ -1,4 +1,4 @@
-import styles from "./select.module.scss";
+import styles from "./Select.module.scss";
 
 export type SelectOption<T extends string> = {
   value: T;
