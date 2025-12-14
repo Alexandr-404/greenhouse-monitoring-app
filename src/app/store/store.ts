@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { api } from "../../shared/api";
+import { roleReducer } from "../../features/authRole/model/slice";
 
 export const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
+    authRole: roleReducer,
   },
   middleware: (gDM) => gDM().concat(api.middleware),
 });
