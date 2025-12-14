@@ -1,0 +1,43 @@
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import type { Greenhouse, Measurement, Region, UUID } from "./types";
+
+export const api = createApi({
+  reducerPath: "api",
+  baseQuery: fetchBaseQuery({ baseUrl: "/api" }),
+  tagTypes: ["Regions", "Greenhouses", "Measurements"],
+  endpoints: (b) => ({
+    getRegions: b.query<Region[], void>({
+      query: () => "/regions",
+      providesTags: ["Regions"],
+    }),
+
+    getGreenhouses: b.query<Greenhouse[], void>({
+      query: () => "/greenhouses",
+      providesTags: ["Greenhouses"],
+    }),
+
+    getMeasurements: b.query<
+      Measurement[],
+      {
+        greenhouseId: UUID;
+        m_type: Measurement;
+        dt_from: string;
+        dt_to: string;
+      }
+    >({
+      query: ({ greenhouseId, ...params }) => ({
+        url: `/measurement/${greenhouseId}`,
+        params,
+      }),
+      providesTags: (_r, _e, a) => [
+        { type: "Measurements", id: `${a.greenhouseId}-${a.m_type}` },
+      ],
+    }),
+  }),
+});
+
+export const {
+  useGetRegionsQuery,
+  useGetGreenhousesQuery,
+  useGetMeasurementsQuery,
+} = api;
