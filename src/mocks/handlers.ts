@@ -1,5 +1,5 @@
 import { http, HttpResponse, delay } from "msw";
-import { genSeries, getGreenhouses, regions } from "./data";
+import { fixMeasurement, genSeries, getGreenhouses, regions } from "./data";
 import type { MeasurementType } from "../shared/api/types";
 export const handlers = [
   http.get("/api/regions", async () => {
@@ -31,4 +31,15 @@ export const handlers = [
       )
     );
   }),
+
+  http.post(
+    "/api/fix_measurement/:measurementId",
+    async ({ params, request }) => {
+      await delay(200);
+      const body = (await request.json()) as { value: number };
+      return HttpResponse.json(
+        fixMeasurement(String(params.measurementId), Number(body.value))
+      );
+    }
+  ),
 ];

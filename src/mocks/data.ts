@@ -107,3 +107,8 @@ export function genSeries(
 
   return out;
 }
+
+export function fixMeasurement(measurementId: string, value: number) {
+  measurementOverrides.set(measurementId, value);
+  return true;
+}

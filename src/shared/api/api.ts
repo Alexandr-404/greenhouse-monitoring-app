@@ -39,6 +39,25 @@ export const api = createApi({
         { type: "Measurements", id: `${a.greenhouseId}-${a.m_type}` },
       ],
     }),
+
+    fixMeasurement: b.mutation<
+      boolean,
+      {
+        measurement_id: UUID;
+        value: number;
+        greenhouseId: UUID;
+        m_type: MeasurementType;
+      }
+    >({
+      query: ({ measurement_id, value }) => ({
+        url: `/fix_measurement/${measurement_id}`,
+        method: "POST",
+        body: { value },
+      }),
+      invalidatesTags: (_r, _e, a) => [
+        { type: "Measurements", id: `${a.greenhouseId}-${a.m_type}` },
+      ],
+    }),
   }),
 });
 
@@ -46,4 +65,5 @@ export const {
   useGetRegionsQuery,
   useGetGreenhousesQuery,
   useGetMeasurementsQuery,
+  useFixMeasurementMutation,
 } = api;

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { subDays, subHours, subYears } from "date-fns";
 
@@ -9,10 +9,11 @@ import {
   useGetGreenhousesQuery,
   useGetMeasurementsQuery,
 } from "../../shared/api/api";
-import type { MeasurementType } from "../../shared/api/types";
+import type { Measurement, MeasurementType } from "../../shared/api/types";
 import { MeasurementControls } from "../../widgets/Controls/MeasurementControls";
 
 import styles from "./GreenhousePage.module.scss";
+import { EditMeasurementModal } from "../../widgets/EditModal";
 
 type RangePreset = "24h" | "7d" | "30d" | "1y";
 
@@ -33,6 +34,9 @@ function calcRange(preset: RangePreset) {
 export function GreenhousePage() {
   const { id } = useParams<{ id: string }>();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [editOpen, setEditOpen] = useState(false);
+  const [selectedPoint, setSelectedPoint] = useState<Measurement | null>(null);
 
   const metric = (searchParams.get("m") as MeasurementType) || "T";
   const range = (searchParams.get("range") as RangePreset) || "24h";
@@ -85,10 +89,21 @@ export function GreenhousePage() {
             data={measurementsQuery.data}
             range={range}
             isEdit={role === "senior_specialist"}
-            onClick={() => console.log("edit")}
+            onClick={(p) => {
+              setSelectedPoint(p);
+              setEditOpen(true);
+            }}
           />
         )}
       </Card>
+
+      <EditMeasurementModal
+        open={role === "senior_specialist" && editOpen}
+        onClose={() => setEditOpen(false)}
+        measurement={selectedPoint}
+        greenhouseId={id!}
+        m_type={metric}
+      />
     </div>
   );
 }
