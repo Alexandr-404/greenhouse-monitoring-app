@@ -1,0 +1,15 @@
+@use "../../../app/styles/variables";
+
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+}
+.label {
+  font-size: 12px;
+  color: var(--c-text-primary);
+}
+.select {
+  padding: 6px 8px;
+}
