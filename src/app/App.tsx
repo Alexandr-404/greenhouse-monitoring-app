@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 
 import styles from "./App.module.scss";
+import { RoleSwitch } from "../features/authRole";
 
 export function App() {
   return (
@@ -9,6 +10,7 @@ export function App() {
         <Link to="/" className={styles.logo}>
           Система мониторинга
         </Link>
+        <RoleSwitch />
       </header>
 
       <main className={styles.main}>
