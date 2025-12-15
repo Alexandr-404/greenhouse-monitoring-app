@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { Input } from "../../../shared/ui";
 import { useDebouncedValue } from "../../../shared/hooks/useDebouncedValue";
 
@@ -22,7 +22,7 @@ export function DashboardFilterInput({
     <Input
       placeholder="Поиск..."
       value={value}
-      onChange={(e) => setValue(e.target.value)}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
     />
   );
 }

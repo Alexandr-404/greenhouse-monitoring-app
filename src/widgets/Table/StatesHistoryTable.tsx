@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, type ChangeEvent } from "react";
 
 import { Button, Input } from "../../shared/ui";
 import type { GreenhouseState, UUID } from "../../shared/api/types";
@@ -66,7 +66,7 @@ export function StatesHistoryTable({
                   <Input
                     value={value}
                     disabled={role === "specialist"}
-                    onChange={(e) =>
+                    onChange={(e: ChangeEvent<HTMLInputElement>) =>
                       setDraft((p) => ({
                         ...p,
                         [row.state_id]: e.target.value,
