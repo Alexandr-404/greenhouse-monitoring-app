@@ -5,9 +5,14 @@ import { AppProviders } from "../providers";
 import "../styles/global.scss";
 
 async function enableMsw() {
-  if (!import.meta.env.DEV) return;
+  // включаем мок всегда (для демо)
   const { worker } = await import("../../mocks/browser");
-  await worker.start({ onUnhandledRequest: "bypass" });
+  return worker.start({
+    onUnhandledRequest: "bypass",
+    serviceWorker: {
+      url: "/mockServiceWorker.js",
+    },
+  });
 }
 
 enableMsw().then(() => {
