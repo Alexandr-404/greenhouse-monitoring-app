@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from "../../../app/store/hooks";
 import { Select } from "../../../shared/ui";
-import type { SelectOption } from "../../../shared/ui/Select";
+import type { SelectOption } from "../../../shared/ui/Select/Select";
+
 import { setRole, type Role } from "../model/slice";
 
 const roleOptions: readonly SelectOption<Role>[] = [

@@ -1,6 +1,5 @@
 import type { MeasurementType } from "../../shared/api/types";
-import { Select } from "../../shared/ui";
-import type { SelectOption } from "../../shared/ui/Select";
+import { Select, type SelectOption } from "../../shared/ui/Select/Select";
 
 import styles from "./MeasurementControls.module.scss";
 
