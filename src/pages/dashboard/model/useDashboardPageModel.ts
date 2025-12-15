@@ -59,11 +59,22 @@ export function useDashboardPageModel() {
     [navigate, queryFromUrl]
   );
 
+  const counts = greenhouse.reduce(
+    (acc, g) => {
+      if (g.last_state === 0) acc.normal++;
+      else if (g.last_state === 1) acc.warning++;
+      else if (g.last_state === 2) acc.alarm++;
+      return acc;
+    },
+    { normal: 0, warning: 0, alarm: 0 }
+  );
+
   return {
     queryFromUrl,
     setQueryParams,
     regions: regions.data ?? [],
     greenhouses: greenhouse,
+    counts,
     selectedGreenhouseId,
     selected,
     onSelectGreenhouse,

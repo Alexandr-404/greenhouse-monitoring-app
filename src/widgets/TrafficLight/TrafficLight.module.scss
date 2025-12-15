@@ -1,0 +1,37 @@
+@use "../../app//styles/variables";
+
+.wrap {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.item {
+  border: 1px solid var(--c-border);
+  border-radius: 14px;
+  padding: 10px;
+  background: var(--c-bg-surface);
+  display: grid;
+  gap: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.dot[aria-label="normal"] {
+  background: var(--c-success);
+}
+.dot[aria-label="warning"] {
+  background: var(--c-warning);
+}
+.dot[aria-label="alarm"] {
+  background: var(--c-danger);
+}
+.label {
+  font-size: 12px;
+  color: var(--c-text-secondary);
+}
+.value {
+  font-size: 18px;
+  font-weight: 800;
+}
