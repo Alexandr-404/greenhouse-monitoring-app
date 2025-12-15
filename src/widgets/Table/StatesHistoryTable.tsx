@@ -1,14 +1,18 @@
 import { useMemo, useState } from "react";
 
-import { Input } from "../../shared/ui";
+import { Button, Input } from "../../shared/ui";
 import type { GreenhouseState, UUID } from "../../shared/api/types";
-import { useGetStatesQuery } from "../../shared/api/api";
+import {
+  useCommentStateMutation,
+  useGetStatesQuery,
+} from "../../shared/api/api";
 
 function labelState(status: GreenhouseState) {
   return status === 0 ? "Норма" : status === 1 ? "Предупреждение" : "Авария";
 }
 
 import styles from "./StatesHistoryTable.module.scss";
+import { useRole } from "../../shared/hooks/useRole";
 
 export function StatesHistoryTable({
   greenhouseId,
@@ -24,6 +28,9 @@ export function StatesHistoryTable({
   const [draft, setDraft] = useState<Record<string, string>>({});
 
   const rows = useMemo(() => statesData.data ?? [], [statesData.data]);
+  const [editComment, editCommentResult] = useCommentStateMutation();
+
+  const role = useRole();
 
   if (statesData.isLoading) return <div>Loading...</div>;
   if (statesData.error) return <div>Error</div>;
@@ -32,6 +39,9 @@ export function StatesHistoryTable({
     <div className={styles.wrap}>
       <div className={styles.head}>
         <h3>История состояний</h3>
+        {editCommentResult.isLoading && (
+          <span className={styles.saving}>Сохранение...</span>
+        )}
       </div>
 
       <table className={styles.table}>
@@ -55,6 +65,7 @@ export function StatesHistoryTable({
                 <td>
                   <Input
                     value={value}
+                    disabled={role === "specialist"}
                     onChange={(e) =>
                       setDraft((p) => ({
                         ...p,
@@ -65,13 +76,21 @@ export function StatesHistoryTable({
                   />
                 </td>
                 <td className={styles.actions}>
-                  <button
-                    className={styles.btn}
-                    disabled={false}
-                    onClick={() => console.log("edit")}
+                  <Button
+                    className={styles.commentBtn}
+                    disabled={
+                      role === "specialist" || editCommentResult.isLoading
+                    }
+                    onClick={() =>
+                      editComment({
+                        greenhouseId,
+                        state_id: row.state_id,
+                        comment: value,
+                      })
+                    }
                   >
                     Сохранить
-                  </button>
+                  </Button>
                 </td>
               </tr>
             );

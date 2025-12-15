@@ -157,3 +157,14 @@ export function getStates(
     return ms >= fromMs && ms <= toMs;
   });
 }
+
+export function commentState(stateId: string, comment: string) {
+  for (const [, rows] of stateHistory) {
+    const it = rows.find((r) => r.state_id === stateId);
+    if (it) {
+      it.comment = comment;
+      return true;
+    }
+  }
+  return false;
+}

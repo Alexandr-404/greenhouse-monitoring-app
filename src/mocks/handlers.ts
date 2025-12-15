@@ -1,5 +1,6 @@
 import { http, HttpResponse, delay } from "msw";
 import {
+  commentState,
   fixMeasurement,
   genSeries,
   getGreenhouses,
@@ -58,6 +59,14 @@ export const handlers = [
 
     return HttpResponse.json(
       getStates(String(params.greenhouseId), new Date(dt_from), new Date(dt_to))
+    );
+  }),
+
+  http.post("/api/comment_state/:stateId", async ({ params, request }) => {
+    await delay(200);
+    const body = (await request.json()) as { comment: string };
+    return HttpResponse.json(
+      commentState(String(params.stateId), String(body.comment ?? ""))
     );
   }),
 ];

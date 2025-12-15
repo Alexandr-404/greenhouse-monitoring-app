@@ -70,6 +70,18 @@ export const api = createApi({
       }),
       providesTags: (_r, _e, a) => [{ type: "States", id: a.greenhouseId }],
     }),
+
+    commentState: b.mutation<
+      boolean,
+      { state_id: UUID; comment: string; greenhouseId: UUID }
+    >({
+      query: ({ state_id, comment }) => ({
+        url: `/comment_state/${state_id}`,
+        method: "POST",
+        body: { comment },
+      }),
+      invalidatesTags: (_r, _e, a) => [{ type: "States", id: a.greenhouseId }],
+    }),
   }),
 });
 
@@ -79,4 +91,5 @@ export const {
   useGetMeasurementsQuery,
   useFixMeasurementMutation,
   useGetStatesQuery,
+  useCommentStateMutation,
 } = api;
