@@ -1,8 +1,10 @@
 import type {
   Greenhouse,
+  GreenhouseState,
   Measurement,
   MeasurementType,
   Region,
+  State,
 } from "../shared/api/types";
 
 export const regions: Region[] = [
@@ -111,4 +113,47 @@ export function genSeries(
 export function fixMeasurement(measurementId: string, value: number) {
   measurementOverrides.set(measurementId, value);
   return true;
+}
+
+const stateHistory = new Map<string, State[]>(); // greenhouseId -> rows
+
+function seedStates(greenhouseId: string) {
+  if (stateHistory.has(greenhouseId)) return;
+  const rows: State[] = [];
+  const to = new Date();
+  const from = new Date(to);
+  from.setDate(from.getDate() - 30);
+
+  const cur = new Date(from);
+  let i = 0;
+  while (cur <= to) {
+    const r = hash01(`${greenhouseId}-${cur.toISOString()}-state`);
+    const st: GreenhouseState = r < 0.7 ? 0 : r < 0.9 ? 1 : 2;
+    rows.push({
+      state_id: `${greenhouseId}-s-${cur.toISOString()}`,
+      greenhouse_id: greenhouseId,
+      created_at: cur.toISOString(),
+      state: st,
+      comment: "",
+    });
+    cur.setDate(cur.getDate() + 1);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    i++;
+  }
+  stateHistory.set(greenhouseId, rows);
+}
+
+export function getStates(
+  greenhouseId: string,
+  dtFrom: Date,
+  dtTo: Date
+): State[] {
+  seedStates(greenhouseId);
+  const rows = stateHistory.get(greenhouseId) ?? [];
+  const fromMs = dtFrom.getTime();
+  const toMs = dtTo.getTime();
+  return rows.filter((r) => {
+    const ms = new Date(r.created_at).getTime();
+    return ms >= fromMs && ms <= toMs;
+  });
 }

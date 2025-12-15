@@ -1,5 +1,11 @@
 import { http, HttpResponse, delay } from "msw";
-import { fixMeasurement, genSeries, getGreenhouses, regions } from "./data";
+import {
+  fixMeasurement,
+  genSeries,
+  getGreenhouses,
+  getStates,
+  regions,
+} from "./data";
 import type { MeasurementType } from "../shared/api/types";
 export const handlers = [
   http.get("/api/regions", async () => {
@@ -42,4 +48,16 @@ export const handlers = [
       );
     }
   ),
+
+  http.get("/api/states/:greenhouseId", async ({ params, request }) => {
+    await delay(150);
+    const url = new URL(request.url);
+    const dt_from = url.searchParams.get("dt_from");
+    const dt_to = url.searchParams.get("dt_to");
+    if (!dt_from || !dt_to) return HttpResponse.json([]);
+
+    return HttpResponse.json(
+      getStates(String(params.greenhouseId), new Date(dt_from), new Date(dt_to))
+    );
+  }),
 ];

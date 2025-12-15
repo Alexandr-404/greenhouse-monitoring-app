@@ -2,18 +2,21 @@ import { useMemo, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { subDays, subHours, subYears } from "date-fns";
 
-import { Card } from "../../shared/ui/Card";
-import { MeasurementChart } from "../../widgets/Chart";
+import { Card } from "../../shared/ui/";
+import {
+  MeasurementChart,
+  MeasurementControls,
+  EditMeasurementModal,
+  StatesHistoryTable,
+} from "../../widgets";
 import { useRole } from "../../shared/hooks/useRole";
 import {
   useGetGreenhousesQuery,
   useGetMeasurementsQuery,
 } from "../../shared/api/api";
 import type { Measurement, MeasurementType } from "../../shared/api/types";
-import { MeasurementControls } from "../../widgets/Controls/MeasurementControls";
 
 import styles from "./GreenhousePage.module.scss";
-import { EditMeasurementModal } from "../../widgets/EditModal";
 
 type RangePreset = "24h" | "7d" | "30d" | "1y";
 
@@ -95,6 +98,14 @@ export function GreenhousePage() {
             }}
           />
         )}
+      </Card>
+
+      <Card className={styles.card}>
+        <StatesHistoryTable
+          greenhouseId={id!}
+          dt_from={dt_from}
+          dt_to={dt_to}
+        />
       </Card>
 
       <EditMeasurementModal

@@ -4,6 +4,7 @@ import type {
   Measurement,
   MeasurementType,
   Region,
+  State,
   UUID,
 } from "./types";
 
@@ -58,6 +59,17 @@ export const api = createApi({
         { type: "Measurements", id: `${a.greenhouseId}-${a.m_type}` },
       ],
     }),
+
+    getStates: b.query<
+      State[],
+      { greenhouseId: UUID; dt_from: string; dt_to: string }
+    >({
+      query: ({ greenhouseId, ...params }) => ({
+        url: `/states/${greenhouseId}`,
+        params,
+      }),
+      providesTags: (_r, _e, a) => [{ type: "States", id: a.greenhouseId }],
+    }),
   }),
 });
 
@@ -66,4 +78,5 @@ export const {
   useGetGreenhousesQuery,
   useGetMeasurementsQuery,
   useFixMeasurementMutation,
+  useGetStatesQuery,
 } = api;
